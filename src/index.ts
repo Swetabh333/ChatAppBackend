@@ -21,7 +21,8 @@ const port = process.env.PORT || 5000;
 
 const corsOptions: CorsOptions = {
   credentials: true,
-  origin: "*",
+  origin:
+    "https://chat-app-frontend-7bsora82t-swetabhs-projects-3b057122.vercel.app/",
   methods: "GET,POST,PUT,PATCH,DELETE",
   allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept",
 };
