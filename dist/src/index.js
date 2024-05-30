@@ -21,7 +21,7 @@ app.use(express_1.default.json());
 const port = process.env.PORT || 5000;
 const corsOptions = {
     credentials: true,
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
     methods: "GET,POST,PUT,PATCH,DELETE",
     allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept",
 };
@@ -33,7 +33,6 @@ app.use("/auth", authroute_1.default);
 app.use("/getusers", userroute_1.default);
 app.use("/messages", messageRoute_1.default);
 const server = app.listen(port, async () => {
-    console.log(process.env.FRONTEND_URL);
     console.log("App listening on port " + port);
 });
 const wss = new ws_1.default.WebSocketServer({ server });

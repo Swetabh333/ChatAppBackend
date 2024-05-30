@@ -21,7 +21,7 @@ const port = process.env.PORT || 5000;
 
 const corsOptions: CorsOptions = {
   credentials: true,
-  origin: "http://localhost:5173",
+  origin: process.env.FRONTEND_URL,
   methods: "GET,POST,PUT,PATCH,DELETE",
   allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept",
 };
@@ -39,7 +39,6 @@ app.use("/getusers", userRouter);
 app.use("/messages", messageRouter);
 
 const server = app.listen(port, async () => {
-  console.log(process.env.FRONTEND_URL);
   console.log("App listening on port " + port);
 });
 
