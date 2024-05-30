@@ -17,6 +17,11 @@ authRouter.get("/verifytoken", auth_1.default, async (req, res) => {
         res.sendStatus(207);
     }
 });
+authRouter.get("/logout", auth_1.default, (req, res) => {
+    res
+        .cookie("token", "", { httpOnly: true, sameSite: "none", secure: true })
+        .send();
+});
 authRouter.post("/", async (req, res) => {
     const { username, password } = req.body;
     try {

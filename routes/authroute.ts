@@ -24,6 +24,12 @@ authRouter.get(
   },
 );
 
+authRouter.get("/logout", authMiddleware, (req: Request, res: Response) => {
+  res
+    .cookie("token", "", { httpOnly: true, sameSite: "none", secure: true })
+    .send();
+});
+
 authRouter.post("/", async (req: Request, res: Response) => {
   const { username, password } = req.body;
   try {
