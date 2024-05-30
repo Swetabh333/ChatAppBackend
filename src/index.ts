@@ -19,21 +19,12 @@ app.use(express.json());
 
 const port = process.env.PORT || 5000;
 
-const allowedOrigins = [process.env.FRONTEND_URL];
-
 const corsOptions: CorsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin || '')) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
   credentials: true,
+  origin: process.env.FRONTEND_URL,
   methods: "GET,POST,PUT,PATCH,DELETE",
   allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept",
 };
-
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
