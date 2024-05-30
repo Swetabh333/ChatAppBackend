@@ -21,11 +21,10 @@ const port = process.env.PORT || 5000;
 
 const corsOptions: CorsOptions = {
   credentials: true,
-  origin: process.env.FRONTEND_URL,
+  origin: "*",
   methods: "GET,POST,PUT,PATCH,DELETE",
   allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept",
 };
-
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
@@ -48,12 +47,11 @@ const wss = new ws.WebSocketServer({ server });
 interface customWS extends WebSocket {
   user?: string;
   id?: string;
-	isAlive?:boolean;
-
+  isAlive?: boolean;
 }
 
 wss.on("connection", async (ws: customWS, req) => {
-	const notifyOnline = () => {
+  const notifyOnline = () => {
     [...wss.clients].forEach((client) => {
       client.send(
         JSON.stringify({
@@ -65,20 +63,20 @@ wss.on("connection", async (ws: customWS, req) => {
       );
     });
   };
-	ws.isAlive = true;
-	let timeout:ReturnType<typeof setTimeout>;
-  setInterval(()=>{
-		ws.ping();
-		timeout = setTimeout(()=>{
-			ws.isAlive = false;
-			ws.close()
-			notifyOnline();
-		})
-	},10000);
+  ws.isAlive = true;
+  let timeout: ReturnType<typeof setTimeout>;
+  setInterval(() => {
+    ws.ping();
+    timeout = setTimeout(() => {
+      ws.isAlive = false;
+      ws.close();
+      notifyOnline();
+    });
+  }, 10000);
 
-	ws.on('pong',()=>{
-		clearTimeout(timeout);
-	})
+  ws.on("pong", () => {
+    clearTimeout(timeout);
+  });
 
   if (req.headers.cookie) {
     const cookies = req.headers.cookie
