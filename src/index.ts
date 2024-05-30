@@ -21,7 +21,7 @@ const port = process.env.PORT || 5000;
 
 const corsOptions: CorsOptions = {
   credentials: true,
-  origin: process.env.FRONTEND_URL,
+  origin: "*",
   methods: "GET,POST,PUT,PATCH,DELETE",
   allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept",
 };
@@ -38,10 +38,9 @@ app.use("/getusers", userRouter);
 
 app.use("/messages", messageRouter);
 
-const server = app.listen(port, async (conn) => {
+const server = app.listen(port, async () => {
+  console.log(process.env.FRONTEND_URL);
   console.log("App listening on port " + port);
-	console.log(process.env.FRONTEND_URL);
-	console.log(conn);
 });
 
 const wss = new ws.WebSocketServer({ server });

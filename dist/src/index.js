@@ -21,7 +21,7 @@ app.use(express_1.default.json());
 const port = process.env.PORT || 5000;
 const corsOptions = {
     credentials: true,
-    origin: process.env.FRONTEND_URL,
+    origin: "*",
     methods: "GET,POST,PUT,PATCH,DELETE",
     allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept",
 };
@@ -33,6 +33,7 @@ app.use("/auth", authroute_1.default);
 app.use("/getusers", userroute_1.default);
 app.use("/messages", messageRoute_1.default);
 const server = app.listen(port, async () => {
+    console.log(process.env.FRONTEND_URL);
     console.log("App listening on port " + port);
 });
 const wss = new ws_1.default.WebSocketServer({ server });
@@ -57,7 +58,7 @@ wss.on("connection", async (ws, req) => {
             notifyOnline();
         });
     }, 10000);
-    ws.on('pong', () => {
+    ws.on("pong", () => {
         clearTimeout(timeout);
     });
     if (req.headers.cookie) {
