@@ -39,6 +39,7 @@ app.use("/getusers", userRouter);
 app.use("/messages", messageRouter);
 
 const server = app.listen(port, async () => {
+	console.log(process.env.FRONTEND_URL)
   console.log("App listening on port " + port);
 });
 
